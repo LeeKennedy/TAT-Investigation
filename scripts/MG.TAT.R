@@ -10,7 +10,7 @@ library(ggplot2)
 
 # Data In ----------------------------------------------------------------
 
-mg.data <- read_excel("C:/Users/leekennedy/Desktop/TAT/MG_Samples.xlsx")
+mg.data <- read_excel("MG_Samples.xlsx")
 mg.data <- mg.data[,-4]
 
 mg.data <- mg.data %>% filter(STATUS == "A")
@@ -48,3 +48,4 @@ summary.set <- set %>%
 summary.set
 
 write.csv(summary.set, "MG_TATS2.csv")
+
