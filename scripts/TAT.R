@@ -9,7 +9,7 @@ library(dplyr)
 library(ggplot2)
 
 # Data In ----------------------------------------------------------------
-data.in <- read_excel("9101852.xlsx")
+data.in <- read_excel("9167425.xlsx")
 data.in <- data.in[,c(1:8)]
 colnames(data.in)[6] <- "COMPLETED"
 colnames(data.in)[7] <- "SAMPLE_COMPLETED"
@@ -47,7 +47,7 @@ long_set <- gather(set, Time, Hours, -ANALYSIS)
 set_plot <- ggplot(long_set, aes(x=reorder(ANALYSIS, -Hours), y=Hours, fill=Time)) +
         geom_bar(stat='identity') +
         scale_fill_manual(values = c("cornflowerblue","burlywood1")) +
-        geom_hline(aes(yintercept=75), lty=2, colour = "red") +
+        geom_hline(aes(yintercept=72), lty=2, colour = "red") +
         geom_hline(aes(yintercept=120), lty=2, colour = "red") +
         coord_flip() +
         theme_bw() +
