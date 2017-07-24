@@ -9,15 +9,15 @@ library(dplyr)
 library(ggplot2)
 
 # Data In ----------------------------------------------------------------
-data.in <- read_excel("FATS01.xlsx")
-#data.in <- data.in[,c(-9, -7)]
-colnames(data.in)[6] <- "STARTED"
-colnames(data.in)[5] <- "LOGGED"
+data.in <- read_excel("PROT01_June.xlsx")
+#data.in <- data.in[,c(-4, -10, -8)]
+colnames(data.in)[7] <- "STARTED"
+colnames(data.in)[6] <- "LOGGED"
 
 
 #t0 <- sapply(data.in[,2], as.numeric)/3600
-x <- sapply(data.in[,5], as.numeric)/(3600*24)
-y <- sapply(data.in[,6], as.numeric)/(3600*24)
+x <- sapply(data.in[,6], as.numeric)/(3600*24)
+y <- sapply(data.in[,7], as.numeric)/(3600*24)
 
 
 set <- as.data.frame(cbind(x, y))
