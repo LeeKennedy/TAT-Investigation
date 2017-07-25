@@ -10,30 +10,31 @@ library(ggplot2)
 
 # Data In ----------------------------------------------------------------
 
-mg.data <- read_excel("~/Desktop/MG_June_2.xlsx")
-#mg.data <- mg.data[,-4]
+mg.data <- read_excel("~/Desktop/MG_TATS_June_2.xlsx")
+mg.data <- mg.data[,-5]
 
 mg.data <- mg.data %>% 
   filter(STATUS == "A") %>% 
   filter(LAB == "CHEMISTRY")
 
 colnames(mg.data)[3] <- "LOGGED"
-colnames(mg.data)[6] <- "STARTED"
-colnames(mg.data)[7] <- "RELEASED"
-colnames(mg.data)[8] <- "CHANGED"
-colnames(mg.data)[9] <- "REVIEWED"
+colnames(mg.data)[4] <- "RECEIVED"
+colnames(mg.data)[7] <- "STARTED"
+colnames(mg.data)[8] <- "RELEASED"
+colnames(mg.data)[9] <- "CHANGED"
+colnames(mg.data)[10] <- "REVIEWED"
 
 
-t0 <- sapply(mg.data[,3], as.numeric)/(3600*24)
-w <- sapply(mg.data[,6], as.numeric)/(3600*24)
-x <- sapply(mg.data[,7], as.numeric)/(3600*24)
-y <- sapply(mg.data[,8], as.numeric)/(3600*24)
-z <- sapply(mg.data[,9], as.numeric)/(3600*24)
+t0 <- sapply(mg.data[,4], as.numeric)/(3600*24)
+w <- sapply(mg.data[,7], as.numeric)/(3600*24)
+x <- sapply(mg.data[,8], as.numeric)/(3600*24)
+y <- sapply(mg.data[,9], as.numeric)/(3600*24)
+z <- sapply(mg.data[,10], as.numeric)/(3600*24)
 set <- as.data.frame(cbind(t0, w, x, y, z))
 
 set[2:5] <- set[2:5]-set[,1]
 set <- set[,2:5]
-set <- cbind(mg.data[,c(1,4)],set)
+set <- cbind(mg.data[,c(1,5)],set)
 set <- set %>% 
   mutate(altered = CHANGED - REVIEWED) %>% 
   filter(altered < 1)
@@ -43,6 +44,8 @@ hist(set$altered,
 
 
 set$Duration <- set$RELEASED-set$STARTED
+
+
 
 set <- na.omit(set)
 
@@ -59,7 +62,11 @@ summary.set
 
 write.csv(summary.set, "~/Desktop/MG_TATS_June.csv")
 
-boxplot(set$Duration ~ set$ANALYSIS,
-        horizontal = TRUE,
-        las=1)
+sets <- set %>% 
+  filter(ANALYSIS == "FAME021103")
 
+hist(sets$REVIEWED,
+     breaks = 40)
+
+hist(sets$RELEASED,
+     breaks = 40)
