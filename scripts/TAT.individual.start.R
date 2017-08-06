@@ -45,3 +45,5 @@ set_plot <- ggplot(set, aes(x=Duration)) +
               axis.line = element_line(size = 0.7, color = "black"), 
               text = element_text(size = 10))
 set_plot
+
+
