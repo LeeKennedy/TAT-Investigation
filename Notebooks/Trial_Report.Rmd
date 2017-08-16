@@ -21,7 +21,7 @@ library(tidyverse)
 library(readxl)
 library(lubridate)
 # Data Input -------------------------------------------------------------
-data.in <- read_excel("~/Desktop/June_2017.xlsx")
+data.in <- read_excel("~/Desktop/TAT/June_2017.xlsx")
 data.in <- data.in[,-5]
 
 dept <- read_excel("~/Desktop/analyses.xlsx")
