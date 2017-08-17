@@ -9,12 +9,12 @@ library(dplyr)
 library(ggplot2)
 
 # Data In ----------------------------------------------------------------
-data.in2 <- read_excel("~/Desktop/MG_TATS_June_2.xlsx")
+data.in2 <- read_excel("~/Desktop/TAT/June_2017.xlsx")
 data.in2 <- data.in2[,-5]
 
 data.in <- data.in2 %>% 
   #filter(LAB == "CHEMISTRY") %>% 
-  filter(SAMPLE_NUMBER == "9994268")
+  filter(SAMPLE_NUMBER == "10048076")
 
 data.in$ANALYSIS <-paste(data.in$ANALYSIS,"_", data.in$REPLICATE_COUNT, sep="")
 

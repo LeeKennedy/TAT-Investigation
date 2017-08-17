@@ -10,7 +10,7 @@ library(ggplot2)
 
 # Data In ----------------------------------------------------------------
 
-mg.data <- read_excel("~/Desktop/MG_TATS_June_2.xlsx")
+mg.data <- read_excel("MG_TATS_June_2.xlsx")
 mg.data <- mg.data[,-5]
 
 mg.data <- mg.data %>% 
@@ -70,3 +70,4 @@ hist(sets$REVIEWED,
 
 hist(sets$RELEASED,
      breaks = 40)
+
