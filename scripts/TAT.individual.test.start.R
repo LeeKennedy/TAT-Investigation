@@ -19,22 +19,16 @@ colnames(data.in)[6] <- "Changed"
 colnames(data.in)[7] <- "Reviewed"
 
 
-#t0 <- sapply(data.in[,2], as.numeric)/3600
 x <- sapply(data.in[,3], as.numeric)/(3600*24)
 y <- sapply(data.in[,4], as.numeric)/(3600*24)
 
 
 set <- as.data.frame(cbind(x, y))
 
-#set[2:3] <- set[2:3]-set[,1]
-#set <- set[,2:3]
 set <- cbind(data.in[,c(1,3)],set)
 
 set$Duration <- set$Started-set$Received
 
-
-
-#set <- set[,c(1,3,5)]
 
 set <- na.omit(set)
 set <- set %>%
