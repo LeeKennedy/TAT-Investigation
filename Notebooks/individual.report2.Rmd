@@ -31,10 +31,10 @@ library(ggplot2)
 library(psych)
 
 # Data In ----------------------------------------------------------------
-data.in <- read_excel("~/Documents/GitHub/TAT-Investigation/data/PEST08_2017b.xlsx", 
+data.in <- read_excel("H:/GitHub Projects/TAT-Investigation/data/PEST08_2017b.xlsx", 
     col_types = c("numeric", "text", "text", 
         "date", "date", "date", "date", 
-        "date", "date", "date"))
+        "date", "date", "date","text"))
 
 data.in <- data.in[,c(-3,-9)]
 
@@ -46,7 +46,7 @@ colnames(data.in)[6] <- "Completed"
 colnames(data.in)[7] <- "Released"
 colnames(data.in)[8] <- "Reviewed"
 
-prep <- read_excel("~/Documents/GitHub/TAT-Investigation/data/PREP.xlsx", col_types = c("numeric", 
+prep <- read_excel("H:/GitHub Projects/TAT-Investigation/data/PREP.xlsx", col_types = c("numeric", 
     "date", "text", "text", "text", "date", 
     "date"))
 
@@ -59,7 +59,7 @@ data.all <- merge(data.in, prep, by.x = "SAMPLE_NUMBER", by.y = "SAMPLE_NUMBER",
 data.in <- data.all %>% 
   filter(Logged > "2017/06/01")
 
-data.in <- data.in[,c(1:4,9,10, 5:8)]
+data.in <- data.in[,c(1:4,10,11, 5:8,9)]
 
 a <- sapply(data.in[,3], as.numeric)/(3600*24)
 b <- sapply(data.in[,4], as.numeric)/(3600*24)
@@ -72,7 +72,9 @@ h <- sapply(data.in[,10], as.numeric)/(3600*24)
 
 set <- as.data.frame(cbind(a,b,c,d,e,f,g,h))
 
-set <- cbind(data.in[,c(1,2)],set)
+set <- cbind(data.in[,c(1,2,11)],set)
+
+set <- set[,c(1,2,4:11,3)]
 
 
 colnames(set)[3] <- "Logged"
@@ -97,7 +99,7 @@ set$TAT <- set$Reviewed - set$Logged
 
 n <- nrow(set)
 m <- nrow(data.in)
-cust <- "x" #length(unique(set$CUSTOMER))
+cust <- length(unique(set$CUSTOMER))
 
 
 ```
