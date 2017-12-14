@@ -168,7 +168,7 @@ set_plot_2
 
 ```{r, echo=FALSE}
 options(digits=3)
-describe(set[,c(11:16)], skew = TRUE)
+describe(set[,c(12:18)], skew = TRUE)
 ```
 &nbsp;
 
