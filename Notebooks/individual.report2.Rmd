@@ -1,5 +1,5 @@
 ---
-title: "PEST08 Timelines"
+title: PEST08 Turnaround Times
 output: html_notebook
 ---
 ```{r, echo=FALSE}
@@ -29,15 +29,17 @@ library(tidyr)
 library(dplyr)
 library(ggplot2)
 library(psych)
+library(stargazer)
 
 # Data In ----------------------------------------------------------------
-data.in <- read_excel("H:/GitHub Projects/TAT-Investigation/data/PEST08_2017b.xlsx", 
+data.in <- read_excel("~/Documents/GitHub/TAT-Investigation/data/PEST08_2017b.xlsx", 
     col_types = c("numeric", "text", "text", 
         "date", "date", "date", "date", 
         "date", "date", "date","text"))
 
 data.in <- data.in[,c(-3,-9)]
 
+test <- substr(data.in$ANALYSIS[1], 1,6)
 
 colnames(data.in)[3] <- "Logged"
 colnames(data.in)[4] <- "Received"
@@ -46,7 +48,7 @@ colnames(data.in)[6] <- "Completed"
 colnames(data.in)[7] <- "Released"
 colnames(data.in)[8] <- "Reviewed"
 
-prep <- read_excel("H:/GitHub Projects/TAT-Investigation/data/PREP.xlsx", col_types = c("numeric", 
+prep <- read_excel("~/Documents/GitHub/TAT-Investigation/data/PREP.xlsx", col_types = c("numeric", 
     "date", "text", "text", "text", "date", 
     "date"))
 
@@ -161,14 +163,23 @@ set_plot_2
 #### Summary Data (Days)
 
 * Transit = time from being logged to being received.
-* Lab-Duration = time from being received to being released.
-* Review = time from being released to being teviewed.
+* Prep  = time from receipt to release from sample prep.
+* Waiting = time from being released from samplt prep to being started.
+* Test_Time = time from being started to being completed.
+* Review = time from being completed to being reviewed.
 * TAT = time from being logged to being reviewed.
 
 
 ```{r, echo=FALSE}
 options(digits=3)
-describe(set[,c(12:18)], skew = TRUE)
+
+df <- data.frame(set[,c(12:18)])
+cols <- c('Transit', 'Prep', 'Waiting', 'Test_Time', 'Checked', 'Review', 'TAT')
+stargazer(
+    df[, cols], type = "text", 
+    summary.stat = c("mean", "min", "median", "max")
+)
+
 ```
 &nbsp;
 
@@ -177,6 +188,7 @@ describe(set[,c(12:18)], skew = TRUE)
 Where multiple samples overlap, the intensity of the dot increases.
 
 ```{r, echo=FALSE}
+
 set_plot_4 <- ggplot(set, aes(x=TAT, y=CUSTOMER)) +
   geom_point(size=4, shape = 21, fill="cornflowerblue", alpha = 0.5)+
   labs(title = "TAT by Client", subtitle = "Days from Logging the Sample to Reviewing the Sample", x="Days", y="") +
