@@ -164,9 +164,10 @@ set_plot_2
 
 * Transit = time from being logged to being received.
 * Prep  = time from receipt to release from sample prep.
-* Waiting = time from being released from samplt prep to being started.
+* Waiting = time from being released from sample prep to being started.
 * Test_Time = time from being started to being completed.
-* Review = time from being completed to being reviewed.
+* Checked = time from being completed to being reviewed.
+* Review = time to be reviewed once released.
 * TAT = time from being logged to being reviewed.
 
 
