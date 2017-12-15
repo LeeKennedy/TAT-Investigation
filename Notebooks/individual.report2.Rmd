@@ -32,7 +32,7 @@ library(psych)
 library(stargazer)
 
 # Data In ----------------------------------------------------------------
-data.in <- read_excel("H:/GitHub Projects/TAT-Investigation/data/PEST08_2017b.xlsx", 
+data.in <- read_excel("~/Documents/GitHub/TAT-Investigation/data/PEST08_2017b.xlsx", 
     col_types = c("numeric", "text", "text", 
         "date", "date", "date", "date", 
         "date", "date", "date","text"))
@@ -48,7 +48,7 @@ colnames(data.in)[6] <- "Completed"
 colnames(data.in)[7] <- "Released"
 colnames(data.in)[8] <- "Reviewed"
 
-prep <- read_excel("H:/GitHub Projects/TAT-Investigation/data/PREP.xlsx", col_types = c("numeric", 
+prep <- read_excel("~/Documents/GitHub/TAT-Investigation/data/ALL_PREP.xlsx", col_types = c("numeric", 
     "date", "text", "text", "text", "date", 
     "date"))
 
@@ -59,7 +59,8 @@ colnames(prep)[3] <- "Prep_Out"
 data.all <- merge(data.in, prep, by.x = "SAMPLE_NUMBER", by.y = "SAMPLE_NUMBER", all = TRUE)
 
 data.in <- data.all %>% 
-  filter(Logged > "2017/06/01")
+  filter(Logged > "2017/06/01") %>% 
+  filter(ANALYSIS == "PEST080716")
 
 data.in <- data.in[,c(1:4,10,11, 5:8,9)]
 
@@ -178,7 +179,7 @@ df <- data.frame(set[,c(12:18)])
 cols <- c('Transit', 'Prep', 'Waiting', 'Test_Time', 'Checked', 'Review', 'TAT')
 stargazer(
     df[, cols], type = "text", 
-    summary.stat = c("mean", "min", "median", "max")
+    summary.stat = c("n", "mean", "min", "median", "max")
 )
 
 ```
