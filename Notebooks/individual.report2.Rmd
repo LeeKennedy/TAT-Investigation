@@ -1,5 +1,5 @@
 ---
-title: PEST08 Turnaround Times
+title: PEST06 Turnaround Times
 output: html_notebook
 ---
 ```{r, echo=FALSE}
@@ -32,7 +32,7 @@ library(psych)
 library(stargazer)
 
 # Data In ----------------------------------------------------------------
-data.in <- read_excel("~/Documents/GitHub/TAT-Investigation/data/PEST08_2017b.xlsx", 
+data.in <- read_excel("~/Documents/GitHub/TAT-Investigation/data/PEST06.xlsx", 
     col_types = c("numeric", "text", "text", 
         "date", "date", "date", "date", 
         "date", "date", "date","text"))
@@ -59,8 +59,8 @@ colnames(prep)[3] <- "Prep_Out"
 data.all <- merge(data.in, prep, by.x = "SAMPLE_NUMBER", by.y = "SAMPLE_NUMBER", all = TRUE)
 
 data.in <- data.all %>% 
-  filter(Logged > "2017/06/01") %>% 
-  filter(ANALYSIS == "PEST080716")
+  filter(Logged > "2017/06/01") 
+
 
 data.in <- data.in[,c(1:4,10,11, 5:8,9)]
 
@@ -104,6 +104,9 @@ n <- nrow(set)
 m <- nrow(data.in)
 cust <- length(unique(set$CUSTOMER))
 
+set <- set[,c(1,11:18)]
+
+set[set < 0] <- NA
 
 ```
 
@@ -123,7 +126,7 @@ The samples came from `r cust` separate customers.
 ```{r, echo=FALSE}
 set_plot_1 <- ggplot(set, aes(x=Waiting)) +
         geom_histogram(binwidth = 0.2, fill = "cornflowerblue", colour = "grey85")+
-        labs(title = "Start Times for PEST08", subtitle = "Days from Receipt at the Laboratory to Commencing Testing", x="Days", y="Samples") +
+        labs(title = paste("Start Times for", test, sep=" "), subtitle = "Days from Receipt at the Laboratory to Commencing Testing", x="Days", y="Samples") +
         theme_bw() +
         theme(panel.grid.major = element_line(size = 0.5, color = "grey"), 
               axis.line = element_line(size = 0.7, color = "black"), 
@@ -136,7 +139,7 @@ set_plot_1
 ```{r, echo=FALSE}
 set_plot_3 <- ggplot(set, aes(x=Checked)) +
         geom_histogram(binwidth = 0.2, fill = "cornflowerblue", colour = "grey85")+
-        labs(title = "Release Times for PEST08", subtitle = "Days from Completing Testing to Releasing", x="Days", y="Samples") +
+        labs(title = paste("Release Times for", test, sep = " "), subtitle = "Days from Completing Testing to Releasing", x="Days", y="Samples") +
         theme_bw() +
         theme(panel.grid.major = element_line(size = 0.5, color = "grey"), 
               axis.line = element_line(size = 0.7, color = "black"), 
@@ -150,7 +153,7 @@ set_plot_3
 ```{r, echo=FALSE}
 set_plot_2 <- ggplot(set, aes(x=TAT)) +
   geom_histogram(binwidth = 0.2, fill = "cornflowerblue", colour = "grey85")+
-  labs(title = "Overall TAT for PEST08", subtitle = "Days from Logging the Sample to Reviewing the Sample", x="Days", y="Samples") +
+  labs(title = paste("Overall TAT for", test, sep = " "), subtitle = "Days from Logging the Sample to Reviewing the Sample", x="Days", y="Samples") +
   theme_bw() +
   theme(panel.grid.major = element_line(size = 0.5, color = "grey"), 
         axis.line = element_line(size = 0.7, color = "black"), 
@@ -175,7 +178,7 @@ set_plot_2
 ```{r, echo=FALSE}
 options(digits=3)
 
-df <- data.frame(set[,c(12:18)])
+df <- data.frame(set[,c(2:9)])
 cols <- c('Transit', 'Prep', 'Waiting', 'Test_Time', 'Checked', 'Review', 'TAT')
 stargazer(
     df[, cols], type = "text", 
