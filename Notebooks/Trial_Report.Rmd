@@ -1,7 +1,9 @@
 ---
 title: "R Notebook"
 output:
+  word_document: default
   html_notebook: default
+  pdf_document: default
   html_document: default
 ---
 
@@ -22,10 +24,14 @@ library(tidyverse)
 library(readxl)
 library(lubridate)
 # Data Input -------------------------------------------------------------
-data.in <- read_excel("~/Desktop/OLAM.xlsx")
+data.in <- read_excel("~/Documents/GitHub/TAT-Investigation/data/OLAM.xlsx", 
+    col_types = c("numeric", "numeric", "date", 
+        "date", "date", "text", "text", "date", 
+        "date", "date", "date", "text", "numeric", 
+        "text", "text"))
 data.in <- data.in[,-5]
 
-dept <- read_excel("~/Desktop/analyses.xlsx")
+dept <- read_excel("~/Documents/GitHub/TAT-Investigation/data/analyses.xlsx")
 dept <- dplyr::filter(dept, !grepl("_",Test_Code))
 ```
 

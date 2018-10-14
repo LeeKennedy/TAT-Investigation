@@ -10,7 +10,10 @@ library(ggplot2)
 
 # Data In ----------------------------------------------------------------
 
-mg.data <- read_excel("MG_June.xlsx")
+mg.data <- read_excel("~/Desktop/MG_June.xlsx", 
+                      col_types = c("numeric", "numeric", "date", 
+                                    "date", "text", "date", "date", "date", 
+                                    "text", "text", "numeric", "text"))
 mg.data <- mg.data[,-4]
 
 mg.data <- mg.data %>% filter(STATUS == "A")
