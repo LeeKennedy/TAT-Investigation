@@ -22,6 +22,8 @@ data.in <- read_excel("data/12100630.xlsx",
 
 data.in$ANALYSIS <-paste(data.in$ANALYSIS,"_", data.in$REPLICATE_COUNT, sep="")
 
+sample_no <- as.character(data.in[1,1])
+
 colnames(data.in)[2] <- "LOGGED"
 colnames(data.in)[3] <- "RECEIVED"
 colnames(data.in)[7] <- "STARTED"
@@ -60,9 +62,10 @@ long_set <- gather(set, Time, Hours, -ANALYSIS)
 
 set_plot <- ggplot(long_set, aes(x=reorder(ANALYSIS, -Hours), y=Hours, fill=Time)) +
         geom_bar(stat='identity', col = "blue") +
-        scale_fill_manual(values = c("cornflowerblue","burlywood1")) +
+        scale_fill_manual(values = c("cornflowerblue","beige")) +
+        labs(title = paste("Sample", sample_no, "Timeline", sep=" "), x = " ", caption = "Blue dotted line = 5 days from receipt in Lab")+
         geom_hline(aes(yintercept=delay+120), lty=2, colour = "blue") +
-        geom_hline(aes(yintercept=delay), lty=1, lwd=1, colour = "red") +
+        geom_hline(aes(yintercept=delay), lty=1, lwd=0.5, colour = "red") +
         coord_flip() +
         theme_bw() +
         theme(panel.grid.major = element_line(size = 0.5, color = "grey"), 

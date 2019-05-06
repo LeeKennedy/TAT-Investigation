@@ -1,17 +1,23 @@
-# clean up ---------------------------------------------------------------
+#### Clean Up environment -----------------------------
 rm(list=ls())
 
-# Packages ---------------------------------------------------------------
+#### Packages -----------------------------
 library(readxl)
+library(tidyverse)
 library(lubridate)
-library(tidyr)
-library(dplyr)
-library(ggplot2)
+library(LK.Toolbox)
+library(here)
 
-# Data In ----------------------------------------------------------------
-data.in <- read_excel("~/Documents/GitHub/TAT-Investigation/data/PEST08_2017a.xlsx", 
-                      col_types = c("numeric", "text", "date","date", "date", "date", "date", "date", "text", "text"))
 
+#### Functions -----------------------------
+
+
+#### Data Input -----------------------------
+here::here()
+data.in <- read_excel("data/PEST08_2017a.xlsx", 
+                      col_types = c("numeric", "text", "date", 
+                                    "date", "date", "date", "date", "date", 
+                                    "text", "text"))
 
 
 colnames(data.in)[3] <- "Logged"

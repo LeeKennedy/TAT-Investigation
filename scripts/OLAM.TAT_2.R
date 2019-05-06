@@ -1,16 +1,20 @@
-# clean up ---------------------------------------------------------------
+#### Clean Up environment -----------------------------
 rm(list=ls())
 
-# Packages ---------------------------------------------------------------
+#### Packages -----------------------------
 library(readxl)
+library(tidyverse)
 library(lubridate)
-library(tidyr)
-library(dplyr)
-library(ggplot2)
+library(LK.Toolbox)
+library(here)
+
 
 # Data In ----------------------------------------------------------------
-
-mg.data <- read_excel("~/Desktop/OLAM.xlsx")
+here::here()
+mg.data <- read_excel("data/OLAM.xlsx", col_types = c("numeric", 
+                                                      "numeric", "date", "date", "date", "text", 
+                                                      "text", "date", "date", "date", "date", 
+                                                      "text", "numeric", "text", "text"))
 mg.data <- mg.data[,-5]
 
 mg.data <- mg.data %>% 
@@ -63,7 +67,7 @@ summary.set <- set %>%
                    
 summary.set
 
-write.csv(summary.set, "~/Desktop/OLAM.csv")
+# write.csv(summary.set, "~/Desktop/OLAM.csv")
 
 sets <- set %>% 
   filter(ANALYSIS == "AFLA090615")
