@@ -24,21 +24,24 @@ data.in$ANALYSIS <-paste(data.in$ANALYSIS,"_", data.in$REPLICATE_COUNT, sep="")
 
 sample_no <- as.character(data.in[1,1])
 
-colnames(data.in)[2] <- "LOGGED"
-colnames(data.in)[3] <- "RECEIVED"
-colnames(data.in)[7] <- "STARTED"
-colnames(data.in)[9] <- "RELEASED"
-colnames(data.in)[10] <- "REVIEWED"
+data.in <- data.in %>% 
+        rename(LOGGED = LOGIN_DATE,
+               RECEIVED = DATE_RECEIVED,
+               STARTED = DATE_STARTED,
+               RELEASED = RELEASED_ON,
+               REVIEWED = DATE_REVIEWED
+               )
 
-t0 <- sapply(data.in[,2], as.numeric)/3600
-x <- sapply(data.in[,3], as.numeric)/3600
-y <- sapply(data.in[,7], as.numeric)/3600
-z <- sapply(data.in[,9], as.numeric)/3600
-w <- sapply(data.in[,10], as.numeric)/3600
+
+t0 <- sapply(data.in[,"LOGGED"], as.numeric)/3600
+x <- sapply(data.in[,"RECEIVED"], as.numeric)/3600
+y <- sapply(data.in[,"STARTED"], as.numeric)/3600
+z <- sapply(data.in[,"RELEASED"], as.numeric)/3600
+w <- sapply(data.in[, "REVIEWED"], as.numeric)/3600
 
 set <- as.data.frame(cbind(t0, x, y, z, w))
 
-delay <- set[1,2]-set[1,1]
+delay <- set[1,"RECEIVED"]-set[1,"LOGGED"]
 
 set[2:5] <- set[2:5]-set[,1]
 set <- set[,2:5]
